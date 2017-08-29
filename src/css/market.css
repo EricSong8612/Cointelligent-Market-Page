@@ -1,0 +1,121 @@
+.header {
+  font-family: Montserrat;
+  margin: 1em auto;
+  margin-bottom: 1.5em;
+  padding: 1em 0;
+}
+
+.logo {
+  font-size: 3em;
+  float: left;
+  color: rgb(31,199,142);
+}
+
+.navigation {
+  float: right;
+  font-size: 0.8em;
+}
+
+.navigation li {
+  display: inline-block;
+  margin-left: 1rem;
+  color: #000;
+}
+
+.exchanges {
+  float: left;
+  width: 8%;
+}
+
+.exchanges ul li {
+  cursor: pointer;
+}
+
+.exchanges ul li span {
+  display: inline-block;
+  padding: 0.6em 0;
+  margin-bottom: 0.6em;
+}
+
+.exchanges ul li span:hover {
+  border-bottom: 4px solid rgb(31,199,142);
+}
+
+.exchanges-details {
+  float: right;
+  width: 90%;
+}
+
+.performer {
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 1em;
+}
+
+.performer span {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  margin-top: 0.3em;
+}
+
+.performer span:hover {
+  background-color: rgb(31,199,142);
+  border-radius: 0.5em;
+}
+
+.summary {
+  float: left;
+  width: 20%;
+}
+
+.fa-btc {
+  color: #fff;
+  background-color: orange;
+  padding: 0.1em 0.2em;
+  border-radius: 50%;
+  transform:rotate(20deg);
+}
+
+.tag {
+  font-family: Oswald;
+}
+
+.snapshot {
+  float: right;
+  width: 70%;
+}
+
+.values {
+  display: inline-block;
+  width: 32%;
+}
+
+.values p:first-child {
+  font-family: Lato;
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+.chartContainer {
+  position: relative;
+  left: -2.5rem;
+}
+
+.timePeriod {
+  float: right;
+  margin-top: 1em;
+}
+
+.timePeriod ul li {
+  display: inline-block;
+  width: 4em;
+  text-align: center;
+  margin-left: 1em;
+  font-size: 0.8em;
+  font-family: Lato;
+  cursor: pointer;
+}
+
+.timePeriod ul li:hover {
+  border-bottom: 4px solid rgb(31,199,142);
+}
