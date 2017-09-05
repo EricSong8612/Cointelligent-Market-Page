@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/market.css';
-import {ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 const data = [
       {time: '1', value: 20},
@@ -79,7 +79,7 @@ const SimpleLineChart = React.createClass({
               <li>1D</li>
               <li>1W</li>
               <li>1D</li>
-              <li>1M</li>
+              <li className='selectedBorder'>1M</li>
               <li>1Y</li>
               <li>ALL</li>
             </ul>

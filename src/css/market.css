@@ -22,45 +22,35 @@
   color: #000;
 }
 
-.exchanges {
-  float: left;
-  width: 8%;
+.cryptocurrencies {
+
 }
 
-.exchanges ul li {
+.cryptocurrencies table {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.cryptocurrencies table th, .cryptocurrencies table td {
+  padding: 0.5em 1em;
+  margin: 0;
+  text-align: center;
+}
+
+.cryptocurrencies table thead tr {
+  background-color: #f5f5f5;
+}
+
+.cryptocurrencies table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.cryptocurrencies table tbody tr td {
+  padding: 1.5em 0;
+}
+
+.cryptocurrencies table tbody tr td:nth-child(2) {
   cursor: pointer;
-}
-
-.exchanges ul li span {
-  display: inline-block;
-  padding: 0.6em 0;
-  margin-bottom: 0.6em;
-}
-
-.exchanges ul li span:hover {
-  border-bottom: 4px solid rgb(31,199,142);
-}
-
-.exchanges-details {
-  float: right;
-  width: 90%;
-}
-
-.performer {
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 1em;
-}
-
-.performer span {
-  display: inline-block;
-  padding: 0.3em 0.6em;
-  margin-top: 0.3em;
-}
-
-.performer span:hover {
-  background-color: rgb(31,199,142);
-  border-radius: 0.5em;
 }
 
 .summary {
@@ -118,4 +108,13 @@
 
 .timePeriod ul li:hover {
   border-bottom: 4px solid rgb(31,199,142);
+}
+
+.selectedBorder {
+  border-bottom: 4px solid rgb(31,199,142);
+}
+
+.selectedBg {
+  background-color: rgb(31,199,142);
+  border-radius: 0.5em;
 }
