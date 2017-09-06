@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MarketChart from './market-chart';
-// import io from 'socket.io-client';
+import { Link } from 'react-router-dom';
+import '../css/market.css';
 
 class Cryptocurrencies extends Component {
   state = {};
@@ -13,24 +13,8 @@ class Cryptocurrencies extends Component {
     });
   }
 
-  // componentWillMount() {
-  //   let socket = io.connect('http://www.coincap.io');
-  //
-  //   console.log(socket);
-  //
-  //   socket.on('trades', function (tradeMsg) {
-  //       console.log(tradeMsg);
-  //   })
-  //
-  // }
-
-  showChart(name) {
-    console.log(name);
-  }
-
   renderCryptocurrencies() {
     let cryptocurrencies = this.state.cryptocurrencies;
-    // console.log(cryptocurrencies);
     if (!cryptocurrencies) {
       console.log('Loading');
     } else {
@@ -38,7 +22,7 @@ class Cryptocurrencies extends Component {
         cryptocurrencies.map(cryptocurrency =>
           <tr key={cryptocurrency.id}>
             <td>{cryptocurrency.rank}</td>
-            <td onClick={() => this.showChart(cryptocurrency.name)}>{cryptocurrency.name}</td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>{cryptocurrency.name}</Link></td>
             <td>${cryptocurrency.market_cap_usd}</td>
             <td>${cryptocurrency.price_usd}</td>
             <td>{cryptocurrency.total_supply}</td>
@@ -69,7 +53,6 @@ class Cryptocurrencies extends Component {
             {this.renderCryptocurrencies()}
           </tbody>
         </table>
-        {/* <MarketChart /> */}
       </div>
     );
   }
