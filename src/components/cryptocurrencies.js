@@ -12,11 +12,11 @@ class Cryptocurrencies extends Component {
       this.setState({cryptocurrencies:cryptocurrencies});
     });
 
-    fetch('https://cointelligent-api.herokuapp.com/api/assets').then(response => {
-      return response.json();
-    }).then(currency => {
-      console.log(currency);
-    });
+    // fetch('https://cointelligent-api.herokuapp.com/api/assets').then(response => {
+    //   return response.json();
+    // }).then(currency => {
+    //   console.log(currency);
+    // });
 
   }
 
