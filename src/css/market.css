@@ -5,6 +5,7 @@
 .cryptocurrencies table {
   margin: auto;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .cryptocurrencies table th, .cryptocurrencies table td {
@@ -25,8 +26,15 @@
   padding: 1.5em 0;
 }
 
-.cryptocurrencies table tbody tr td:nth-child(2) a {
-  cursor: pointer;
+.cryptocurrencies table th:nth-child(2), .cryptocurrencies table tr td:nth-child(2) {
+  text-align: left;
+  width: 2em;
+}
+
+.cryptocurrencies table tr a {
+  display: block;
+  width: 100%;
+  height: 200%;
 }
 
 .summary {

@@ -4,8 +4,7 @@ import '../css/market.css';
 import {ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 class MarketChart extends Component {
-  state={timePeriods:[{period:'1Min', display:''},
-                      {period:'1H', display:'selectedBorder'},
+  state={timePeriods:[{period:'1H', display:'selectedBorder'},
                       {period:'1D', display:''},
                       {period:'1W', display:''},
                       {period:'1M', display:''},
@@ -20,36 +19,67 @@ class MarketChart extends Component {
     }).then(currency => {
       this.setState({snapshot:currency[0]});
 
-      fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=119&e=CCCAGG
+      fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=60&e=CCCAGG
   `).then(response => {
         return response.json();
-      }).then(histominute => {
-        (histominute.Data).map(data => {
+      }).then(within1Hour => {
+        (within1Hour.Data).map(data => {
           data.time = this.displayTime(data.time);
         })
-        this.setState({minData:histominute.Data});
+        this.setState({hourData:within1Hour.Data});
+        this.setState({chartData:within1Hour.Data});
       });
 
-      fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=119&e=CCCAGG
+      fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${this.state.snapshot.symbol}&tsym=USD&e=CCCAGG
   `).then(response => {
         return response.json();
-      }).then(histohour => {
-        (histohour.Data).map(data => {
+      }).then(within1Day => {
+        (within1Day.Data).map(data => {
           data.time = this.displayTime(data.time);
         })
-        this.setState({hourData:histohour.Data});
-        this.setState({chartData:histohour.Data});
+        this.setState({dayData:within1Day.Data});
       });
 
-      fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=59&e=CCCAGG
+    fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${this.state.snapshot.symbol}&tsym=USD&e=CCCAGG
   `).then(response => {
         return response.json();
-      }).then(histoday => {
-        (histoday.Data).map(data => {
+      }).then(within1Week => {
+        (within1Week.Data).map(data => {
           data.time = this.displayTime(data.time);
         })
-        this.setState({dayData:histoday.Data});
+        this.setState({weekData:within1Week.Data});
       });
+
+    fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=744&e=CCCAGG
+  `).then(response => {
+        return response.json();
+      }).then(within1Month => {
+        (within1Month.Data).map(data => {
+          data.time = this.displayTime(data.time);
+        })
+        this.setState({monthData:within1Month.Data});
+      });
+
+    fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=365&e=CCCAGG
+  `).then(response => {
+        return response.json();
+      }).then(within1Year => {
+        (within1Year.Data).map(data => {
+          data.time = this.displayTime(data.time);
+        })
+        this.setState({yearData:within1Year.Data});
+      });
+
+    fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.state.snapshot.symbol}&tsym=USD&limit=2000&e=CCCAGG
+  `).then(response => {
+        return response.json();
+      }).then(all => {
+        (all.Data).map(data => {
+          data.time = this.displayTime(data.time);
+        })
+        this.setState({allData:all.Data});
+      });
+
     });
   }
 
@@ -75,6 +105,14 @@ class MarketChart extends Component {
     return displayTime;
   }
 
+  renderChange(change) {
+    if (change >= 0) {
+      return 'rgb(31,199,142)';
+    } else {
+      return 'rgb(252,0,0)';
+    }
+  }
+
   renderSnapshot() {
     let snapshot = this.state.snapshot;
     if (!snapshot) {
@@ -89,7 +127,7 @@ class MarketChart extends Component {
             <h1 style={{fontSize:'1.5em'}}><i className="fa fa-btc"></i>{snapshot.name}</h1>
             <h2 style={{fontWeight:'300', marginBottom:'0'}}>$<span style={{fontSize:'2em'}}>{price_int}</span>.{price_float}</h2>
             <p>
-              <span className='tag' style={{color:'rgb(31,199,142)'}}>{change_24hr} ({snapshot.percent_change_24h}%)</span>
+              <span className='tag' style={{color:this.renderChange(change_24hr)}}>{change_24hr} ({snapshot.percent_change_24h}%)</span>
               <span className='tag' style={{color:'#aaa'}}> PAST DAY</span>
             </p>
           </div>
@@ -114,19 +152,8 @@ class MarketChart extends Component {
 
   selectTime(time) {
     switch (time) {
-      case '1Min':
-        this.setState({timePeriods:[{period:'1Min', display:'selectedBorder'},
-                                    {period:'1H', display:''},
-                                    {period:'1D', display:''},
-                                    {period:'1W', display:''},
-                                    {period:'1M', display:''},
-                                    {period:'1Y', display:''},
-                                    {period:'ALL', display:''}],
-                       chartData:this.state.minData});
-        break;
       case '1H':
-        this.setState({timePeriods:[{period:'1Min', display:''},
-                                    {period:'1H', display:'selectedBorder'},
+        this.setState({timePeriods:[{period:'1H', display:'selectedBorder'},
                                     {period:'1D', display:''},
                                     {period:'1W', display:''},
                                     {period:'1M', display:''},
@@ -135,8 +162,7 @@ class MarketChart extends Component {
                        chartData:this.state.hourData});
         break;
       case '1D':
-        this.setState({timePeriods:[{period:'1Min', display:''},
-                                    {period:'1H', display:''},
+        this.setState({timePeriods:[{period:'1H', display:''},
                                     {period:'1D', display:'selectedBorder'},
                                     {period:'1W', display:''},
                                     {period:'1M', display:''},
@@ -144,9 +170,44 @@ class MarketChart extends Component {
                                     {period:'ALL', display:''}],
                        chartData:this.state.dayData});
         break;
+      case '1W':
+        this.setState({timePeriods:[{period:'1H', display:''},
+                                    {period:'1D', display:''},
+                                    {period:'1W', display:'selectedBorder'},
+                                    {period:'1M', display:''},
+                                    {period:'1Y', display:''},
+                                    {period:'ALL', display:''}],
+                       chartData:this.state.weekData});
+        break;
+      case '1M':
+        this.setState({timePeriods:[{period:'1H', display:''},
+                                    {period:'1D', display:''},
+                                    {period:'1W', display:''},
+                                    {period:'1M', display:'selectedBorder'},
+                                    {period:'1Y', display:''},
+                                    {period:'ALL', display:''}],
+                       chartData:this.state.monthData});
+        break;
+      case '1Y':
+        this.setState({timePeriods:[{period:'1H', display:''},
+                                    {period:'1D', display:''},
+                                    {period:'1W', display:''},
+                                    {period:'1M', display:''},
+                                    {period:'1Y', display:'selectedBorder'},
+                                    {period:'ALL', display:''}],
+                       chartData:this.state.yearData});
+        break;
+      case 'ALL':
+        this.setState({timePeriods:[{period:'1H', display:''},
+                                    {period:'1D', display:''},
+                                    {period:'1W', display:''},
+                                    {period:'1M', display:''},
+                                    {period:'1Y', display:''},
+                                    {period:'ALL', display:'selectedBorder'}],
+                       chartData:this.state.allData});
+        break;
       default:
-        this.setState({timePeriods:[{period:'1Min', display:''},
-                                    {period:'1H', display:'selectedBorder'},
+        this.setState({timePeriods:[{period:'1H', display:'selectedBorder'},
                                     {period:'1D', display:''},
                                     {period:'1W', display:''},
                                     {period:'1M', display:''},

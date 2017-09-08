@@ -3,7 +3,7 @@ import '../css/index.css';
 
 export default () =>
 <div className='header'>
-  <a href=""><div className='logo'>C</div></a>
+  <a href="http://www.cointelligent.co"><div className='logo'>C</div></a>
   <ul className='navigation'>
     <a href=""><li>BLOG</li></a>
     <a href="https://www.facebook.com/Cointelligent-121465488504619/"><li><i className='fa fa-facebook-square'></i></li></a>

@@ -8,7 +8,7 @@ export default class Markets extends React.Component {
   render() {
     return(
       <div className='market'>
-        <Link to='/'><h2>MARKETS</h2></Link>
+        <h2><Link to='/'>MARKETS</Link></h2>
         <Cryptocurrencies />
       </div>
     )

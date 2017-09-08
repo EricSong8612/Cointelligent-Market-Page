@@ -11,6 +11,21 @@ class Cryptocurrencies extends Component {
     }).then(cryptocurrencies => {
       this.setState({cryptocurrencies:cryptocurrencies});
     });
+
+    fetch('https://cointelligent-api.herokuapp.com/api/assets').then(response => {
+      return response.json();
+    }).then(currency => {
+      console.log(currency);
+    });
+
+  }
+
+  renderChange(change) {
+    if (change >= 0) {
+      return 'rgb(31,199,142)';
+    } else {
+      return 'rgb(252,0,0)';
+    }
   }
 
   renderCryptocurrencies() {
@@ -21,13 +36,13 @@ class Cryptocurrencies extends Component {
       return(
         cryptocurrencies.map(cryptocurrency =>
           <tr key={cryptocurrency.id}>
-            <td>{cryptocurrency.rank}</td>
-            <td><Link to={`/market/${cryptocurrency.id}`}>{cryptocurrency.name}</Link></td>
-            <td>${cryptocurrency.market_cap_usd}</td>
-            <td>${cryptocurrency.price_usd}</td>
-            <td>{cryptocurrency.total_supply}</td>
-            <td>${cryptocurrency['24h_volume_usd']}</td>
-            <td>{cryptocurrency.percent_change_24h}%</td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>{cryptocurrency.rank}</Link></td>
+            <td><div style={{height:'1.2em',maxWidth:'10em',whiteSpace:'nowrap',overflow:'scroll'}}><Link to={`/market/${cryptocurrency.id}`}><i className="fa fa-btc"></i> {cryptocurrency.name}</Link></div></td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>${cryptocurrency.market_cap_usd}</Link></td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>${cryptocurrency.price_usd}</Link></td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>{cryptocurrency.total_supply}</Link></td>
+            <td><Link to={`/market/${cryptocurrency.id}`}>${cryptocurrency['24h_volume_usd']}</Link></td>
+            <td><Link to={`/market/${cryptocurrency.id}`} style={{color:this.renderChange(cryptocurrency.percent_change_24h)}}>{cryptocurrency.percent_change_24h}%</Link></td>
           </tr>
         )
       )
