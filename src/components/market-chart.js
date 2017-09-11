@@ -24,7 +24,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(within1Hour => {
         (within1Hour.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('1H', data.time);
+          data.time = this.displayTime('1H', data.time);
         })
         this.setState({hourData:within1Hour.Data});
         this.setState({chartData:within1Hour.Data});
@@ -35,7 +36,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(within1Day => {
         (within1Day.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('1D', data.time);
+          data.time = this.displayTime('1D', data.time);
         })
         this.setState({dayData:within1Day.Data});
       });
@@ -45,7 +47,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(within1Week => {
         (within1Week.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('1W', data.time);
+          data.time = this.displayTime('1W', data.time);
         })
         this.setState({weekData:within1Week.Data});
       });
@@ -55,7 +58,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(within1Month => {
         (within1Month.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('1M', data.time);
+          data.time = this.displayTime('1M', data.time);
         })
         this.setState({monthData:within1Month.Data});
       });
@@ -65,7 +69,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(within1Year => {
         (within1Year.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('1Y', data.time);
+          data.time = this.displayTime('1Y', data.time);
         })
         this.setState({yearData:within1Year.Data});
       });
@@ -75,7 +80,8 @@ class MarketChart extends Component {
         return response.json();
       }).then(all => {
         (all.Data).map(data => {
-          data.time = this.displayTime(data.time);
+          data.timeLabel = this.timeLabel('ALL', data.time);
+          data.time = this.displayTime('ALL', data.time);
         })
         this.setState({allData:all.Data});
       });
@@ -83,7 +89,7 @@ class MarketChart extends Component {
     });
   }
 
-  displayTime(time) {
+  displayTime(unit, time) {
     let formalTime = new Date(time*1000);
     let month = formalTime.getMonth()+1;
     if (month < 10) {
@@ -101,8 +107,45 @@ class MarketChart extends Component {
     if (min < 10) {
       min = '0' + min;
     };
-    let displayTime = formalTime.getFullYear()+'/'+month+'/'+date+' '+hour+':'+min;
-    return displayTime;
+    let displayTime = '';
+      if (unit === '1Y' || unit === 'ALL') {
+      displayTime = formalTime.getFullYear()+'/'+month+'/'+date;
+      return displayTime;
+    } else {
+      displayTime = month+'/'+date+' '+hour+':'+min;
+      return displayTime;
+    }
+  }
+
+  timeLabel(unit, time) {
+    let formalTime = new Date(time*1000);
+    let month = formalTime.getMonth()+1;
+    if (month < 10) {
+      month = '0' + month;
+    };
+    let date = formalTime.getDate();
+    if (date < 10) {
+      date = '0' + date;
+    };
+    let hour = formalTime.getHours();
+    if (hour < 10) {
+      hour = '0' + hour;
+    };
+    let min = formalTime.getMinutes();
+    if (min < 10) {
+      min = '0' + min;
+    };
+    let timeLabel = '';
+    if (unit === '1H'|| unit === '1D') {
+      timeLabel = hour+':'+min;
+      return timeLabel;
+    } else if (unit === '1W' || unit === '1M') {
+      timeLabel = month+'/'+date;
+      return timeLabel;
+    } else {
+      timeLabel = formalTime.getFullYear()+'/'+month+'/'+date;
+      return timeLabel;
+    }
   }
 
   renderChange(change) {
@@ -124,7 +167,7 @@ class MarketChart extends Component {
       return(
         <div>
           <div className='summary'>
-            <h1 style={{fontSize:'1.5em'}}><i className="fa fa-btc"></i>{snapshot.name}</h1>
+            <h1 style={{fontSize:'1.5em'}}><div className='icon'>C</div> {snapshot.name}</h1>
             <h2 style={{fontWeight:'300', marginBottom:'0'}}>$<span style={{fontSize:'2em'}}>{price_int}</span>.{price_float}</h2>
             <p>
               <span className='tag' style={{color:this.renderChange(change_24hr)}}>{change_24hr} ({snapshot.percent_change_24h}%)</span>
@@ -226,6 +269,7 @@ class MarketChart extends Component {
 
   renderChart() {
     let chartData = this.state.chartData;
+    //console.log(chartData);
     if (!chartData) {
       console.log('Loading');
     } else {
@@ -233,11 +277,11 @@ class MarketChart extends Component {
         <div className='chartContainer'>
           <ResponsiveContainer width='100%' height={260} minWidth={300}>
           	<LineChart data={chartData}>
-             <XAxis dataKey="time" axisLine={false} />
-             <YAxis axisLine={false} type="number" domain={['dataMin - 10', 'dataMax + 10']} padding={{ bottom: 10 }}/>
-             <CartesianGrid vertical={false} strokeDasharray="3 3"/>
-             <Tooltip />
-             <Line type="monotone" dataKey="close" stroke="rgb(31,199,142)" strokeWidth="2"  activeDot={{r: 6}}/>
+             <XAxis dataKey='timeLabel' axisLine={false} />
+             <YAxis axisLine={false} type='number' domain={['dataMin - 10', 'dataMax + 10']} padding={{ bottom: 10 }}/>
+             <CartesianGrid vertical={false} strokeDasharray='3 3'/>
+             <Tooltip content={<CustomTooltip/>}/>
+             <Line type='monotone' dataKey='close' stroke='rgb(31,199,142)' strokeWidth='2'  activeDot={{r: 6}}/>
             </LineChart>
           </ResponsiveContainer>
           <div className='timePeriod'>
@@ -253,12 +297,29 @@ class MarketChart extends Component {
   render() {
     return(
       <div className='chart'>
-        <Link to='/'><h2>MARKETS</h2></Link>
+        <h2><Link to='/'>MARKETS</Link></h2>
         {this.renderSnapshot()}
         {this.renderChart()}
       </div>
     )
   }
 }
+
+class CustomTooltip extends Component {
+  render () {
+    // console.log(this.props);
+    const { active } = this.props;
+    if (active) {
+      const { payload, label } = this.props;
+      return (
+        <div className='chartTooltip'>
+          <p>{`Time: ${payload[0].payload.time}`}</p>
+          <p>{`Closed Price: $${payload[0].value}`}</p>
+        </div>
+      );
+    }
+    return null;
+  }
+};
 
 export default MarketChart;

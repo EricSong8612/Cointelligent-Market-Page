@@ -1,7 +1,3 @@
-.cryptocurrencies {
-
-}
-
 .cryptocurrencies table {
   margin: auto;
   border-collapse: collapse;
@@ -23,7 +19,7 @@
 }
 
 .cryptocurrencies table tbody tr td {
-  padding: 1.5em 0;
+  padding: 0.5em 0;
 }
 
 .cryptocurrencies table th:nth-child(2), .cryptocurrencies table tr td:nth-child(2) {
@@ -34,7 +30,15 @@
 .cryptocurrencies table tr a {
   display: block;
   width: 100%;
-  height: 200%;
+}
+
+.nameCell {
+  height: 1.5em;
+  line-height: 1.5em;
+  max-width: 7.4em;
+  white-space: nowrap;
+  overflow: scroll;
+  padding: 1em 0.6em;
 }
 
 .summary {
@@ -42,12 +46,10 @@
   width: 20%;
 }
 
-.fa-btc {
-  color: #fff;
-  background-color: orange;
-  padding: 0.1em 0.2em;
-  border-radius: 50%;
-  transform:rotate(20deg);
+.icon {
+  display: inline-block;
+  font-family: Montserrat;
+  color: orange;
 }
 
 .tag {
@@ -96,4 +98,19 @@
 .selectedBg {
   background-color: rgb(31,199,142);
   border-radius: 0.5em;
+}
+
+.chartTooltip {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 1em;
+}
+
+.chartTooltip p {
+  margin: 0;
+}
+
+.chartTooltip p:nth-child(2) {
+  margin-top: 0.5em;
+  color: rgb(31,199,142);
 }

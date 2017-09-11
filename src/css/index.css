@@ -80,8 +80,6 @@ noscript {
   }
 }
 
-
-
 .header {
   font-family: Montserrat;
   margin: 1em auto;
@@ -90,14 +88,15 @@ noscript {
 }
 
 .logo {
-  font-size: 3em;
+  font-size: 3.5em;
   float: left;
   color: rgb(31,199,142);
 }
 
 .navigation {
   float: right;
-  font-size: 0.8em;
+  font-size: 0.9em;
+  margin-top: 1.5em;
 }
 
 .navigation li {
