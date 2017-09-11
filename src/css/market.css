@@ -2,6 +2,7 @@
   margin: auto;
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 
 .cryptocurrencies table th, .cryptocurrencies table td {
@@ -22,9 +23,13 @@
   padding: 0.5em 0;
 }
 
+.cryptocurrencies table th:first-child, .cryptocurrencies table tr td:first-child {
+  width: 1em;
+}
+
 .cryptocurrencies table th:nth-child(2), .cryptocurrencies table tr td:nth-child(2) {
   text-align: left;
-  width: 2em;
+  max-width: 3em;
 }
 
 .cryptocurrencies table tr a {
@@ -35,10 +40,10 @@
 .nameCell {
   height: 1.5em;
   line-height: 1.5em;
-  max-width: 7.4em;
+  max-width: 7em;
   white-space: nowrap;
   overflow: scroll;
-  padding: 1em 0.6em;
+  padding: 1em 1em;
 }
 
 .summary {

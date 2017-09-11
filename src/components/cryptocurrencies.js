@@ -56,10 +56,14 @@ class Cryptocurrencies extends Component {
           //   <td><Link to={`/market/${cryptocurrency.id}`} style={{color:this.renderChange(cryptocurrency.percent_change_24h)}}>{cryptocurrency.percent_change_24h}%</Link></td>
           // </tr>
           <tr key={cryptocurrency.symbol}>
-            <td><Link to={`/market/${cryptocurrency.reddit}`}>{cryptocurrency.rank}</Link></td>
             <td>
               <Link to={`/market/${cryptocurrency.reddit}`}>
-                <div className='nameCell' style={{borderLeft:`5px solid ${cryptocurrency.color}`}}>{cryptocurrency.name}</div>
+                <div style={{borderLeft:`5px solid ${cryptocurrency.color}`,height:'3em',lineHeight:'3em',paddingLeft:'1em'}}>{cryptocurrency.rank}</div>
+              </Link>
+            </td>
+            <td>
+              <Link to={`/market/${cryptocurrency.reddit}`}>
+                <div className='nameCell'>{cryptocurrency.name}</div>
               </Link>
             </td>
             <td><Link to={`/market/${cryptocurrency.reddit}`}>${cryptocurrency.marketCap}</Link></td>
