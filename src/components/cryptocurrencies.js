@@ -70,7 +70,7 @@ class Cryptocurrencies extends Component {
             <td><Link to={`/market/${cryptocurrency.reddit}`}>${cryptocurrency.globalPrice}</Link></td>
             <td><Link to={`/market/${cryptocurrency.reddit}`}>{cryptocurrency.availableSupply}</Link></td>
             <td><Link to={`/market/${cryptocurrency.reddit}`}>${cryptocurrency['24hVolume']}</Link></td>
-            <td><Link to={`/market/${cryptocurrency.reddit}`} style={{color:this.renderChange(cryptocurrency['24hPercentChange'])}}>{cryptocurrency['24hPercentChange']}%</Link></td>
+            <td><Link to={`/market/${cryptocurrency.reddit}`} style={{color:this.renderChange(cryptocurrency['24hPercentChange'])}}>{(cryptocurrency['24hPercentChange']).toFixed(6)}%</Link></td>
           </tr>
         )
       )
